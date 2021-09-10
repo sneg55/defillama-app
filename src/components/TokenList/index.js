@@ -154,10 +154,10 @@ function TopTokenList({ tokens, itemMax = 100 }) {
   }, [tokens, itemMax])
 
   const filteredList = useMemo(() => {
-    if (tokens) {
-      let sorted = tokens;
-      if (sortedColumn !== SORT_FIELD.TVL) {
-        sorted = tokens.sort((a, b) => {
+    return (
+      tokens &&
+      tokens
+        .sort((a, b) => {
           if (sortedColumn === SORT_FIELD.SYMBOL || sortedColumn === SORT_FIELD.NAME) {
             return a[sortedColumn] > b[sortedColumn] ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
           }
@@ -165,9 +165,8 @@ function TopTokenList({ tokens, itemMax = 100 }) {
             ? (sortDirection ? -1 : 1) * 1
             : (sortDirection ? -1 : 1) * -1
         })
-      }
-      return sorted.slice(itemMax * (page - 1), page * itemMax)
-    }
+        .slice(itemMax * (page - 1), page * itemMax)
+    )
   }, [tokens, itemMax, page, sortDirection, sortedColumn])
 
   const ListItem = ({ item, index }) => {
